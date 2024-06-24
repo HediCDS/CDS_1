@@ -107,4 +107,4 @@ class TestBloom(unittest.TestCase):
         fp_prob = f_pos / len(not_added)
         print(f'Actual false positive rate = {fp_prob:.2f}')
         #check the actual false positive rate whether it exceeds the expected rate or not
-        self.assertLessEqual(fp_prob, bf.fp_rate * 1.1, 'Error, the actual false positive rate is higher than the expected')ed')
+        self.assertLessEqual(fp_prob, bf.fp_rate * 1.1, 'Error, the actual false positive rate is higher than the expected')
