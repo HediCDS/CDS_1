@@ -42,5 +42,42 @@ def benchmark(nlist, p):
     return time_insert, time_search, prob_fpos
 
 
+nlist = [1000, 5000, 10000, 50000, 100000]
+fprate = 0.05
+
+time_insert, time_search, prob_fp = benchmark(nlist, fprate)
+
+plt.figure(figsize=(14, 8))
+
+plt.subplot(1, 3, 1)
+plt.plot(nlist, time_insert, label = "Insertion Time")
+plt.xlabel('Words Counts')
+plt.ylabel('Time in seconds')
+plt.legend()
+
+
+plt.subplot(1, 3, 1)
+plt.plot(nlist, time_insert, label = "Insertion Time")
+plt.title('Insert Time')
+plt.xlabel('Words Counts')
+plt.ylabel('Time in seconds')
+plt.legend()
+
+
+plt.subplot(1, 3, 1)
+plt.plot(nlist, time_search, label = "Search Time")
+plt.title('Search Time')
+plt.xlabel('Words Counts')
+plt.ylabel('Time in seconds')
+plt.legend()
+
+plt.subplot(1, 3, 1)
+plt.plot(nlist, prob_fp, label = "Probability of false positives")
+plt.title('Probability of false positives')
+plt.xlabel('Words Counts')
+plt.ylabel('False Positive Rate')
+plt.legend()
+
+
       
 
