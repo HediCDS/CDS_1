@@ -27,6 +27,7 @@ def benchmark(nlist, p):
     time_insert = []
     time_search = []
     prob_fpos = []
+    comp_rates = []
     for n in nlist:
         #create a bloom filter
         bf = BloomFilter(n, p)
@@ -66,7 +67,13 @@ def benchmark(nlist, p):
         #Calculate the fp rate and append to the list of fp rates
         fprate = fp / (n // 2)
         prob_fpos.append(fprate)
-    return time_insert, time_search, prob_fpos
+
+        true_size = bf.size
+        approp_size = -(n * np.log(p)) / (np.log(2) ** 2)
+        comp_rate = approp_size / true_size
+        comp_rates.append(comp_rate)
+        
+    return time_insert, time_search, prob_fpos, comp_rates
 
 #Test with large samples and expected false pos rate
 nlist = [1000, 5000, 10000, 50000, 100000]
