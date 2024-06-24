@@ -73,9 +73,10 @@ fprate = 0.05
 #call the benchmark
 time_insert, time_search, prob_fp = benchmark(nlist, fprate)
 
-#plot the insertion time
+
 plt.figure(figsize=(14, 8))
 
+#plot the insertion time
 plt.subplot(1, 3, 1)
 plt.plot(nlist, time_insert, label = "Insertion Time")
 plt.xlabel('Words Counts')
@@ -83,14 +84,7 @@ plt.ylabel('Time in seconds')
 plt.legend()
 
 #plot seach time
-plt.subplot(1, 3, 1)
-plt.plot(nlist, time_insert, label = "Insertion Time")
-plt.title('Insert Time')
-plt.xlabel('Words Counts')
-plt.ylabel('Time in seconds')
-plt.legend()
 
-#plot fp probability
 plt.subplot(1, 3, 1)
 plt.plot(nlist, time_search, label = "Search Time")
 plt.title('Search Time')
@@ -98,6 +92,7 @@ plt.xlabel('Words Counts')
 plt.ylabel('Time in seconds')
 plt.legend()
 
+#plot fp probability
 plt.subplot(1, 3, 1)
 plt.plot(nlist, prob_fp, label = "Probability of false positives")
 plt.title('Probability of false positives')
