@@ -45,7 +45,7 @@ def benchmark(nlist, p):
         time_ins = time.time() - begin_time
         
         #add the time to the insertion time list
-        time_insert.append(time_ins)
+        time_insert.append(time_ins / n)
 
         #Provide a list og inserted and not inserted words
         strings_check_list = strings_inserted[:n // 2] + list_words(n // 2, set(strings_inserted)) 
@@ -60,8 +60,7 @@ def benchmark(nlist, p):
             if bf.search(s) and s not in strings_inserted:
                 fp += 1
         #mark the search time and append to search time list
-        check_time = time.time() - begin_search_time
-        time_search.append(check_time)  
+        time_search.append((time.time() - begin_search_time) / n)
 
         #Calculate the fp rate and append to the list of fp rates
         fprate = fp / (n // 2)
