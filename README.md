@@ -12,7 +12,7 @@ This file is the file which contains the implementation of the bloom filter algo
 
 
 Conclusions:
-- As the number of inserted words increases, the time needed for insertion increases linearly.
-- As the number of inserted words increases, the time needed for searching increases.
+- On average, as the number of inserted words increases, the time needed for insertion increases.
+- On average, as the number of inserted words increases, the time needed for searching increases.
 - There are some unstable changes in the false positive rate as a function of increasing words counts, we can see that it decreases drastically between 20,000 to 50,000 words, followed by dramatic increase as word counts increase.
 - The compression rate decreases with increasing word counts untill a certain count (about 50,000 word) which it remains stable after.
