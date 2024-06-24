@@ -4,6 +4,8 @@ import random
 import time
 import string
 import matplotlib.pyplot as plt
+import typing
+from typing import List
 
 #Function to provide lowercase strings of given length
 def get_words(ln: int) -> str:
@@ -85,7 +87,7 @@ plt.legend()
 
 #plot seach time
 
-plt.subplot(1, 3, 1)
+plt.subplot(1, 3, 2)
 plt.plot(nlist, time_search, label = "Search Time")
 plt.title('Search Time')
 plt.xlabel('Words Counts')
@@ -93,13 +95,13 @@ plt.ylabel('Time in seconds')
 plt.legend()
 
 #plot fp probability
-plt.subplot(1, 3, 1)
+plt.subplot(1, 3, 3)
 plt.plot(nlist, prob_fp, label = "Probability of false positives")
 plt.title('Probability of false positives')
 plt.xlabel('Words Counts')
 plt.ylabel('False Positive Rate')
 plt.legend()
 
-
+plt.savefig('benchmark_results.png')
       
 
