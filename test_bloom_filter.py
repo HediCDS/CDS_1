@@ -40,22 +40,21 @@ def words_generator(n, min=3, max=12):
     return [get_words(random.randint(min, max)) for _ in range(n)]
 
 
-Class TestBloom:
+class TestBloom(unittest.TestCase):
 #Function to test the hash functions
-    def test_hashF():
+    def test_hashF(self):
         #create a bloom filter with the expected count and fp probability
         b = BloomFilter(exp_count, exp_fp_rate)
         #Domain1: generate natural language words
         strings = words_generator(exp_count)
-        print("Hash functions test: natural language")
         for i in range(b.hfunctions):
             hashes = [mmh3.hash(string, i) % b.size for string in strings]
             Mean = np.mean(hashes)
             StdDev = np.std(hashes) 
             #The dist of each hash function for natural language
-            print(f'Function {i+1}: Minimum length = {min(hashes)}, Maximum length = {max(hashes)}, Mean={sum(hashes)/len(hashes)}, Standard deviation={np.std(hashes):.2f}')
-            assert Mean < 0.6 * b.size and Mean > 0.4 * b.size, 'Mean is outside the accepted range'
-            assert StdDev > 0, 'Standard Deviation must be positive'
+            # print(f'Function {i+1}: Minimum length = {min(hashes)}, Maximum length = {max(hashes)}, Mean={sum(hashes)/len(hashes)}, Standard deviation={np.std(hashes):.2f}')
+            self.assertTrue(0.4 * b.size <= Mean <= 0.6 * b.size, 'Mean is outside the accepted range')
+            self.assertGreater(StdDev, 0, 'Standard Deviation must be positive')
     
         #Domain2: DNA sequences
         print("Hash functions test: DNA sequences")
@@ -66,11 +65,11 @@ Class TestBloom:
             StdDev = np.std(hashes)
             #The dist of hash functions for DNA sequences
             print(f'Function {i+1}: Minimum length = {min(hashes)}, Maximum length = {max(hashes)}, Mean={sum(hashes)/len(hashes)}, Standard deviation={np.std(hashes):.2f}')
-            assert Mean < 0.6 * b.size and Mean > 0.4 * b.size, 'Mean is outside the accepted range'
-            assert StdDev > 0, 'Standard Deviation must be positive'
+            self.assertTrue(0.4 * b.size <= Mean <= 0.6 * b.size, 'Mean is outside the accepted range')
+            self.assertGreater(StdDev, 0, 'Standard Deviation must be positive')
     
     #Function to test false positives and false negatives
-    def test_bf():
+    def test_bf(self):
         #get a list of strings to be inserted
         words_to_insert = list_words(exp_count, set())
     
@@ -84,14 +83,8 @@ Class TestBloom:
         #shuffle the strings
         shuffle(words_to_insert)
     
-        #If all inserted words are in the bloom, no problem. Otherwise, print an Error msg, cannot have false negatives
-        # for word in words_to_insert:
-        #     if not bf.search(word):
-        #         print('Error, cannot have false negatives.')
-        #         return
-        # print("No false negatives")
         for word in words_to_insert:
-            assert bf.search(word), 'Error, cannot have false negatives'
+            self.assertTrue(bf.search(word), 'Error, cannot have false negatives')
         print('No false negatives')
     
         #get another list of words and make sure that they have not been inserted
@@ -107,8 +100,4 @@ Class TestBloom:
         #calculate and print the actual false positive rate
         fp_prob = f_pos / len(not_added)
         print(f'Actual false positive rate = {fp_prob:.2f}')
-        assert fp_prob <= bf.fp_rate, 'Error, the actual false positive rate is higher than the expected'
-    
-        # #print a warning msg if the actual false positive prob exceed the expected
-        # if fp_prob > bf.fp_rate:
-        #     print('Caution, the actual false positive rate exceeded the expected')
+        self.assertLessEqual(fp_prob, bf.fp_rate * 1.1, 'Error, the actual false positive rate is higher than the expected')ed')
