@@ -6,6 +6,7 @@ import string
 import mmh3
 from typing import List
 import numpy as np
+import unittest
 
 #specify expected number of strings to be inserted and the expected false positive rate.
 exp_count = 1000
