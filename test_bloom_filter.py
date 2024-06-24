@@ -53,22 +53,17 @@ class TestBloom(unittest.TestCase):
             hashes = [mmh3.hash(string, i) % b.size for string in strings]
             Mean = np.mean(hashes)
             StdDev = np.std(hashes) 
-            #The dist of each hash function for natural language
-            #print(f'Function {i+1}: Minimum length = {min(hashes)}, Maximum length = {max(hashes)}, Mean={sum(hashes)/len(hashes)}, Standard deviation={np.std(hashes):.2f}')
             #Test the range of the mean of hash function
             self.assertTrue(0.4 * b.size <= Mean <= 0.6 * b.size, 'Mean is outside the accepted range')
             #Test the positivity of the standard deviation
             self.assertGreater(StdDev, 0, 'Standard Deviation must be positive')
     
         #Domain2: DNA sequences
-        print("Hash functions test: DNA sequences")
         dna_seq = dna_generator(exp_count)
         for i in range(b.hfunctions):
             hashes = [mmh3.hash(dna, i) % b.size for dna in dna_seq]
             Mean = np.mean(hashes)
             StdDev = np.std(hashes)
-            #The dist of hash functions for DNA sequences
-            print(f'Function {i+1}: Minimum length = {min(hashes)}, Maximum length = {max(hashes)}, Mean={sum(hashes)/len(hashes)}, Standard deviation={np.std(hashes):.2f}')
             #Test the range of the mean of hash function
             self.assertTrue(0.4 * b.size <= Mean <= 0.6 * b.size, 'Mean is outside the accepted range')
             #Test the positivity of the standard deviation
