@@ -41,6 +41,7 @@ def words_generator(n, min=3, max=12):
 
 
 class TestBloom(unittest.TestCase):
+#Class to test hash functions and bloom filter
 #Function to test the hash functions
     def test_hashF(self):
         #create a bloom filter with the expected count and fp probability
@@ -52,8 +53,10 @@ class TestBloom(unittest.TestCase):
             Mean = np.mean(hashes)
             StdDev = np.std(hashes) 
             #The dist of each hash function for natural language
-            # print(f'Function {i+1}: Minimum length = {min(hashes)}, Maximum length = {max(hashes)}, Mean={sum(hashes)/len(hashes)}, Standard deviation={np.std(hashes):.2f}')
+            #print(f'Function {i+1}: Minimum length = {min(hashes)}, Maximum length = {max(hashes)}, Mean={sum(hashes)/len(hashes)}, Standard deviation={np.std(hashes):.2f}')
+            #Test the range of the mean of hash function
             self.assertTrue(0.4 * b.size <= Mean <= 0.6 * b.size, 'Mean is outside the accepted range')
+            #Test the positivity of the standard deviation
             self.assertGreater(StdDev, 0, 'Standard Deviation must be positive')
     
         #Domain2: DNA sequences
@@ -65,7 +68,9 @@ class TestBloom(unittest.TestCase):
             StdDev = np.std(hashes)
             #The dist of hash functions for DNA sequences
             print(f'Function {i+1}: Minimum length = {min(hashes)}, Maximum length = {max(hashes)}, Mean={sum(hashes)/len(hashes)}, Standard deviation={np.std(hashes):.2f}')
+            #Test the range of the mean of hash function
             self.assertTrue(0.4 * b.size <= Mean <= 0.6 * b.size, 'Mean is outside the accepted range')
+            #Test the positivity of the standard deviation
             self.assertGreater(StdDev, 0, 'Standard Deviation must be positive')
     
     #Function to test false positives and false negatives
@@ -84,6 +89,7 @@ class TestBloom(unittest.TestCase):
         shuffle(words_to_insert)
     
         for word in words_to_insert:
+            #check the false negatives
             self.assertTrue(bf.search(word), 'Error, cannot have false negatives')
         print('No false negatives')
     
@@ -100,4 +106,5 @@ class TestBloom(unittest.TestCase):
         #calculate and print the actual false positive rate
         fp_prob = f_pos / len(not_added)
         print(f'Actual false positive rate = {fp_prob:.2f}')
+        #check the actual false positive rate whether it exceeds the expected rate or not
         self.assertLessEqual(fp_prob, bf.fp_rate * 1.1, 'Error, the actual false positive rate is higher than the expected')ed')
