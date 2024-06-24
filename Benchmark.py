@@ -5,18 +5,17 @@ import time
 import string
 import matplotlib.pyplot as plt
 import typing
-from typing import List
+import numpy as np
 
 #Function to provide lowercase strings of given length
 def get_words(ln: int) -> str:
     charachters = string.ascii_lowercase
-    rndom = [random.choice(charachters) for _ in range(ln)]
-    return "".join(rndom)
+    return "".join(random.choice(charachters) for _ in range(ln))
     
 #Function to provide strings that are unique from the inserted ones, this to test false positives
-def list_words(exp_count: int, words, min=3, max=12) -> List[str]:
+def list_words(exp_count: int, words, min=3, max=12):
     wlist = set()
-    for i in range(exp_count):
+    while len(wlist) < exp_count:
         string = get_words(random.randint(min, max))
         if string not in words:
             wlist.add(string)
