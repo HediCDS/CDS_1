@@ -18,16 +18,29 @@ def list_words(exp_count: int, words, min=3, max=12) -> List[str]:
     return list(wlist)
 
 def benchmark(nlist, p):
-  time_insert = []
-  time_search = []
-  prob_fpos = []
-  for n in nlist:
-    bf = BloomFilter(n, p)
-    strings_inserted = list_words(n, set())
+    time_insert = []
+    time_search = []
+    prob_fpos = []
+    for n in nlist:
+        bf = BloomFilter(n, p)    
+        strings_inserted = list_words(n, set())
+        begin_time = time.time()
+        for string in strings_inserted:
+            bf.insert(string)
+        time_ins = time.time() - begin_time
+        time_insert.append(time_ins)
+        strings_check_list = strings_inserted[:n // 2] + list_words(n // 2, set(strings_inserted)) 
+        begin_search_time = time.time()
+        fp = 0
+        for s in strings_check_list:
+            if bf.search(s) and s not in strings_inserted:
+                fp += 1
+        check_time = time.time() - begin_search_time
+        time_search.append(check_time)  
+        fprate = fp / (n // 2)
+        prob_fpos.append(fprate)
+    return time_insert, time_search, prob_fpos
 
-    begin_time = time.time()
-    for string in strings_inserted:
-      bf.insert(string)
-    time_ins = time.time() - begin_time
-    time_insert.append(time_ins)
+
+      
 
