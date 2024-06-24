@@ -68,6 +68,7 @@ def benchmark(nlist, p):
         fprate = fp / (n // 2)
         prob_fpos.append(fprate)
 
+        #compute the compression rate
         true_size = bf.size
         approp_size = -(n * np.log(p)) / (np.log(2) ** 2)
         comp_rate = approp_size / true_size
@@ -80,7 +81,7 @@ nlist = [1000, 5000, 10000, 50000, 100000]
 fprate = 0.05
 
 #call the benchmark
-time_insert, time_search, prob_fp = benchmark(nlist, fprate)
+time_insert, time_search, prob_fp, comp_rates = benchmark(nlist, fprate)
 
 
 plt.figure(figsize=(14, 8))
@@ -108,7 +109,15 @@ plt.title('Probability of false positives')
 plt.xlabel('Words Counts')
 plt.ylabel('False Positive Rate')
 plt.legend()
-
 plt.savefig('benchmark_results.png')
-      
+
+
+plt.figure(figsize=(12, 8))
+
+#plot the compression rate
+plt.plot(nlist, comp_rates, label = "Compression rate")
+plt.xlabel('Words Counts')
+plt.ylabel('Compression Rate')
+plt.legend()
+plt.savefig('Compression_rates.png')
 
